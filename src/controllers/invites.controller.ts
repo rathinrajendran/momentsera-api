@@ -11,7 +11,7 @@ export async function getInvites(req: Request, res: Response) {
     );
     res.json(rows);
   } catch (error: any) {
-    console.error("🔥 getInvites error:", error);
+    console.error("🔥 getInvites errors:", error);
 
     res.status(500).json({
       error: error.message,
