@@ -21,3 +21,12 @@ app.get("/db-test", async (_req, res) => {
     });
   }
 });
+
+app.get("/env-test", (_req, res) => {
+  res.json({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    database: process.env.DB_NAME,
+    passwordLength: process.env.DB_PASSWORD?.length,
+  });
+});
