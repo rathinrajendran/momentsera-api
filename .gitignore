@@ -1,12 +1,17 @@
-node_modules
-.next
-dist
+node_modules/
+dist/
+
 .env
-.env.local
-.env.production
 
-coverage
+uploads/
 
-.vscode
+logs/
+*.log
+
+.vscode/
+.idea/
 
 .DS_Store
+Thumbs.db
+
+*.tsbuildinfo
