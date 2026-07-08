@@ -30,3 +30,15 @@ app.get("/env-test", (_req, res) => {
     passwordLength: process.env.DB_PASSWORD?.length,
   });
 });
+app.get("/env-debug", (_req, res) => {
+  res.json({
+    user: JSON.stringify(process.env.DB_USER),
+    database: JSON.stringify(process.env.DB_NAME),
+    host: JSON.stringify(process.env.DB_HOST),
+    passwordLength: process.env.DB_PASSWORD?.length,
+    passwordStartsWith: process.env.DB_PASSWORD?.charCodeAt(0),
+    passwordEndsWith: process.env.DB_PASSWORD?.charCodeAt(
+      process.env.DB_PASSWORD.length - 1,
+    ),
+  });
+});
