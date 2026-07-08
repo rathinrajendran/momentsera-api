@@ -7,12 +7,18 @@ import pool from "../db";
 export async function getInvites(req: Request, res: Response) {
   try {
     const [rows] = await pool.query(
-      `SELECT * FROM event_invites WHERE is_active = 1`
+      `SELECT * FROM event_invites WHERE is_active = 1`,
     );
     res.json(rows);
-  } catch (error) {
+  } catch (error: any) {
     console.error("🔥 getInvites error:", error);
-    res.status(500).json({ error: "Failed to fetch invites" });
+
+    res.status(500).json({
+      error: error.message,
+      code: error.code,
+      sqlMessage: error.sqlMessage,
+      stack: process.env.NODE_ENV !== "production" ? error.stack : undefined,
+    });
   }
 }
 
