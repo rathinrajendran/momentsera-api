@@ -21,14 +21,20 @@
     "cors": "^2.8.5",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
     "google-auth-library": "^10.9.0",
     "jsonwebtoken": "^9.0.3",
     "multer": "^2.0.2",
     "mysql2": "^3.16.0",
+    "nodemailer": "^9.0.3",
     "stripe": "^22.1.0",
     "tailwind-merge": "^3.4.0",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "zod": "^4.4.3"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/nodemailer": "^8.0.1"
+  }
 }
