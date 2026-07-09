@@ -1,9 +1,13 @@
-import "dotenv/config";
+import pool from "./db"; // ✅ Import your default pool from db.ts
+import { createApp } from "./app";
+import dotenv from "dotenv";
 
-import app from "./app";
+dotenv.config();
 
-const PORT = Number(process.env.PORT) || 4000;
+// ✅ Pass the real database pool instance down to your app wrapper
+const app = createApp(pool);
 
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`✅ API running on port ${PORT}`);
+  console.log(`🚀 Server running smoothly on port ${PORT}`);
 });
