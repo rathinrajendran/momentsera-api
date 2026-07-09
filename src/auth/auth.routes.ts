@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AuthController } from "./auth.controller";
-
+import { authenticateToken } from "./auth.middleware";
 export function createAuthRoutes(dbPool: any): Router {
   const router = Router();
   const controller = new AuthController(dbPool);
@@ -11,7 +11,7 @@ export function createAuthRoutes(dbPool: any): Router {
 
   router.get("/google/redirect", (req, res) => {
     const clientId = process.env.GOOGLE_CLIENT_ID;
-    const redirectUri = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/api/auth/google/callback`;
+    const redirectUri = `${process.env.API_URL}/api/auth/google/callback`;
     const googleAuthUrl =
       `https://accounts.google.com/o/oauth2/v2/auth?` +
       `client_id=${clientId}` +
@@ -22,7 +22,8 @@ export function createAuthRoutes(dbPool: any): Router {
       `&prompt=consent`;
     res.redirect(googleAuthUrl);
   });
-
+  router.get("/me", authenticateToken, controller.me);
+  router.post("/logout", controller.logout);
   router.get("/google/callback", controller.googleCallback);
 
   return router;

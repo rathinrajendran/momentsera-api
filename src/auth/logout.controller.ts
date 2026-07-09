@@ -107,18 +107,7 @@ export class AuthController {
       res.status(401).json({ success: false, message: err.message });
     }
   };
-  logout = async (req: Request, res: Response): Promise<void> => {
-    res.clearCookie("refresh_token", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-    });
 
-    res.status(200).json({
-      success: true,
-      message: "Logged out",
-    });
-  };
   googleCallback = async (
     req: Request,
     res: Response,
@@ -141,7 +130,7 @@ export class AuthController {
         return;
       }
 
-      const redirectUri = `${process.env.API_URL}/api/auth/google/callback`;
+      const redirectUri = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/api/auth/google/callback`;
 
       // 1. Exchange code using native global fetch
       const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
