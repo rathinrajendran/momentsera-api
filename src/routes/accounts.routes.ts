@@ -1,10 +1,10 @@
 import { Router } from "express";
-import authMiddleware from "../middleware/auth.middleware";
 import {
   createAccount,
   getAccounts,
   checkAccountExists,
 } from "../controllers/accounts.controller";
+import { authenticate } from "../auth/auth.middleware";
 
 const router = Router();
 
@@ -13,6 +13,6 @@ router.post("/", createAccount);          // Register
 router.get("/check", checkAccountExists); // Email / phone check
 
 /* ---------- PROTECTED ---------- */
-router.get("/", authMiddleware, getAccounts);
+router.get("/", authenticate, getAccounts);
 
 export default router;

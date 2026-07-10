@@ -5,17 +5,17 @@ import {
   getWishes,
   getMyWishes,
 } from "../controllers/wishes.controller.js";
-import authMiddleware from "../middleware/auth.middleware.js";
+import { authenticate } from "../auth/auth.middleware.js";
 
 const router = Router();
 
 /* Editor */
-router.patch("/events/:eventId/wishes", authMiddleware, updateWishes);
+router.patch("/events/:eventId/wishes", authenticate, updateWishes);
 
 /* Live invite */
 router.post("/invites/:eventKey/wishes", submitWish);
 
 router.get("/invites/:eventKey/wishes", getWishes);
 
-router.get("/account/wishes", authMiddleware, getMyWishes);
+router.get("/account/wishes", authenticate, getMyWishes);
 export default router;

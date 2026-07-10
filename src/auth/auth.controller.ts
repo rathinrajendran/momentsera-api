@@ -41,7 +41,7 @@ export class AuthController {
       res.cookie("refresh_token", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
 
@@ -111,7 +111,7 @@ export class AuthController {
     res.clearCookie("refresh_token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "lax",
     });
 
     res.status(200).json({
@@ -252,13 +252,15 @@ export class AuthController {
       res.cookie("refresh_token", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
 
-      // 6. Redirect browser back to frontend application dashboard
+      // 6. Redirect browser back to frontend with access token
+      const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+
       res.redirect(
-        `${process.env.FRONTEND_URL || "http://localhost:3000"}/auth/callback?token=${accessToken}`,
+        `${frontendUrl}/auth/callback?token=${encodeURIComponent(accessToken)}`,
       );
     } catch (error: any) {
       console.error(
@@ -267,5 +269,25 @@ export class AuthController {
       );
       next(error);
     }
+  };
+  forgotPassword = async (req: Request, res: Response): Promise<void> => {
+    res.status(501).json({
+      success: false,
+      message: "Not implemented",
+    });
+  };
+
+  resetPassword = async (req: Request, res: Response): Promise<void> => {
+    res.status(501).json({
+      success: false,
+      message: "Not implemented",
+    });
+  };
+
+  verifyEmail = async (req: Request, res: Response): Promise<void> => {
+    res.status(501).json({
+      success: false,
+      message: "Not implemented",
+    });
   };
 }

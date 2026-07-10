@@ -9,7 +9,7 @@ import draftsRoutes from "./routes/drafts.routes.js";
 import galleryRoutes from "./routes/gallery.routes.js";
 import wishesRoutes from "./routes/wishes.routes.js";
 import userRoutes from "./routes/user.routes.js";
-import authMiddleware from "./middleware/auth.middleware.js";
+import { authenticate } from "./auth/auth.middleware.js";
 import invitesRoutes from "./routes/invites.routes";
 import { createAuthRoutes } from "./auth/auth.routes";
 
@@ -42,8 +42,8 @@ export function createApp(dbPool: any) {
   app.use("/api/events", eventsRoutes);
   app.use("/api/user", userRoutes);
 
-  app.use("/api/drafts", authMiddleware, draftsRoutes);
-  app.use("/api/gallery", authMiddleware, galleryRoutes);
+  app.use("/api/drafts", authenticate, draftsRoutes);
+  app.use("/api/gallery", authenticate, galleryRoutes);
   app.use("/api", wishesRoutes);
 
   /* ---------- STATIC UPLOADS & ERROR HANDLER ---------- */

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AuthController } from "./auth.controller";
-import { authenticateToken } from "./auth.middleware";
+import { authenticate } from "./auth.middleware";
 export function createAuthRoutes(dbPool: any): Router {
   const router = Router();
   const controller = new AuthController(dbPool);
@@ -8,7 +8,11 @@ export function createAuthRoutes(dbPool: any): Router {
   router.post("/register", controller.register);
   router.post("/login", controller.login);
   router.post("/refresh", controller.refresh);
+  router.post("/forgot-password", controller.forgotPassword);
 
+  router.post("/reset-password", controller.resetPassword);
+
+  router.post("/verify-email", controller.verifyEmail);
   router.get("/google/redirect", (req, res) => {
     const clientId = process.env.GOOGLE_CLIENT_ID;
     const redirectUri = `${process.env.API_URL}/api/auth/google/callback`;
@@ -22,7 +26,7 @@ export function createAuthRoutes(dbPool: any): Router {
       `&prompt=consent`;
     res.redirect(googleAuthUrl);
   });
-  router.get("/me", authenticateToken, controller.me);
+  router.get("/me", authenticate, controller.me);
   router.post("/logout", controller.logout);
   router.get("/google/callback", controller.googleCallback);
 

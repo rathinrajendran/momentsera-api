@@ -24,7 +24,7 @@ export const validateBody =
       res.status(400).json({ status: "error", errors: error.errors });
     }
   };
-export const authenticateToken = (
+export const authenticate = (
   req: Request,
   res: Response,
   next: NextFunction,

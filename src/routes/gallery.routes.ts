@@ -2,7 +2,7 @@ import { Router } from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import authMiddleware from "../middleware/auth.middleware";
+import { authenticate } from "../auth/auth.middleware";
 
 const router = Router();
 
@@ -34,7 +34,7 @@ const upload = multer({
 
 /* ---------- ROUTE ---------- */
 
-router.post("/upload", authMiddleware, upload.single("image"), (req, res) => {
+router.post("/upload", authenticate, upload.single("image"), (req, res) => {
   const userId = req.user?.id; // ✅ typed
   const role = req.user?.role; // ✅ typed
 

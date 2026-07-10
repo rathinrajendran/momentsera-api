@@ -1,5 +1,4 @@
 import { Router } from "express";
-import authMiddleware from "../middleware/auth.middleware";
 
 import {
   upsertOnboardingEvent,
@@ -10,6 +9,7 @@ import {
   checkEventKeyAvailability,
   updateEventKey,
 } from "../controllers/events.controller";
+import { authenticate } from "../auth/auth.middleware";
 
 const router = Router();
 
@@ -19,14 +19,14 @@ router.get("/check-event-key/:eventKey", checkEventKeyAvailability);
 router.get("/key/:event_key", getEventByKey);
 
 /* ---------- PROTECTED ---------- */
-router.post("/onboarding", authMiddleware, upsertOnboardingEvent);
+router.post("/onboarding", authenticate, upsertOnboardingEvent);
 
-router.patch("/:eventId/section", authMiddleware, saveEventSection);
+router.patch("/:eventId/section", authenticate, saveEventSection);
 
-router.post("/:eventId/publish", authMiddleware, publishEvent);
+router.post("/:eventId/publish", authenticate, publishEvent);
 
-router.delete("/:eventId", authMiddleware, deleteEvent);
+router.delete("/:eventId", authenticate, deleteEvent);
 
-router.patch("/:eventId/event-key", authMiddleware, updateEventKey);
+router.patch("/:eventId/event-key", authenticate, updateEventKey);
 
 export default router;
