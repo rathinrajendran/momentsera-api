@@ -29,11 +29,21 @@ export class AuthService {
 
     // 2. 🔐 OAUTH BYPASS RULE: Skip verification if verified via Google Federated ID
     if (!isOAuth) {
-      if (!user.password) throw new Error("Please sign in using Google.");
+      if (user.provider === "google") {
+        throw new Error("Please sign in using Google.");
+      }
 
-      const isPasswordValid = await comparePassword(password, user.password);
+      if (!user.password_hash) {
+        throw new Error("Password not configured.");
+      }
+
+      const isPasswordValid = await comparePassword(
+        password,
+        user.password_hash,
+      );
+
       if (!isPasswordValid) {
-        throw new Error("Invalid email or password parameters.");
+        throw new Error("Invalid email or password.");
       }
     }
 
