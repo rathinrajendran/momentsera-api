@@ -7,7 +7,6 @@ import { authenticate } from "../auth/auth.middleware";
 const router = Router();
 
 /* ---------- STORAGE ---------- */
-
 const uploadDir = path.join(process.cwd(), "uploads/gallery");
 
 if (!fs.existsSync(uploadDir)) {
